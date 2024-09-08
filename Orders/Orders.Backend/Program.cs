@@ -9,9 +9,16 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 //configuramos la inyeccion del DataContext
-builder.Services.AddDbContext<DataContext>(x=>x.UseSqlServer("name=LocalConnection"));
+builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer("name=LocalConnection"));
 
 var app = builder.Build();
+
+//Linea de comando para no tener problemas al consumir la appi desde el frond
+app.UseCors(x => x
+    .AllowAnyHeader()
+    .AllowAnyHeader()
+    .SetIsOriginAllowed(origin => true)
+    .AllowCredentials());
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
