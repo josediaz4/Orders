@@ -16,6 +16,11 @@ namespace Orders.Frontend.Pages.Countries
         [Inject] public SweetAlertService sweetAlertService { get; set; } = null!;
         public bool FormPostedSuccessfully { get; set; }
 
+        protected override void OnInitialized()
+        {
+            editContext = new(Country);
+        }
+
         private async Task OnBeforeInternalNavigation(LocationChangingContext context)
         {
             var formWasEdited = editContext.IsModified();

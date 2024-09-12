@@ -2,6 +2,10 @@
 
 <h3>Países</h3>
 
+<div class="mb-3">
+    <a class="btn btn-primary" href="/countries/create">Nuevo País</a>
+</div>
+
 <GenericList MyList="Countries"> 
     <Body>
         <table class="table table-striped">
@@ -12,13 +16,13 @@
             </thead>
 
             <tbody>
-                @foreach (var country in Countries)
+                @foreach (var country in Countries!)
                 {
                     <tr>
                         <td>@country.Name</td>
                         <td>
-                            <a class="btn btn-warning">Editar</a>
-                            <button class="btn btn-danger">Borrar</button>
+                            <a href="/countries/edit/@country.Id" class="btn btn-warning">Editar</a>
+                            <button @onclick=@(() => DeleteAsync(country)) class="btn btn-danger">Borrar</button>
                         </td>
                     </tr>
                 }

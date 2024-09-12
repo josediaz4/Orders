@@ -16,7 +16,7 @@ var app = builder.Build();
 //Linea de comando para no tener problemas al consumir la appi desde el frond
 app.UseCors(x => x
     .AllowAnyHeader()
-    .AllowAnyHeader()
+    .AllowAnyMethod()
     .SetIsOriginAllowed(origin => true)
     .AllowCredentials());
 
