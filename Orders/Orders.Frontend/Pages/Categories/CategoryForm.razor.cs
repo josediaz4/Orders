@@ -4,13 +4,13 @@ using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Routing;
 using Orders.Shared.Entities;
 
-namespace Orders.Frontend.Pages.Countries
+namespace Orders.Frontend.Pages.Categories
 {
-    public partial class CountryForm
+    public partial class CategoryForm
     {
         private EditContext editContext = null!;
 
-        [EditorRequired, Parameter] public Country Country { get; set; } = null!;
+        [EditorRequired, Parameter] public Category Category { get; set; } = null!;
         [EditorRequired, Parameter] public EventCallback OnValidSubmit { get; set; }
         [EditorRequired, Parameter] public EventCallback ReturnAction { get; set; }
         [Inject] public SweetAlertService SweetAlertService { get; set; } = null!;
@@ -18,7 +18,7 @@ namespace Orders.Frontend.Pages.Countries
 
         protected override void OnInitialized()
         {
-            editContext = new(Country);
+            editContext = new(Category);
         }
 
         private async Task OnBeforeInternalNavigation(LocationChangingContext context)
@@ -32,9 +32,9 @@ namespace Orders.Frontend.Pages.Countries
             var result = await SweetAlertService.FireAsync(new SweetAlertOptions
             {
                 Title = "Confirmación",
-                Text = "¿Desea abandonar la página y perder los cambios?",
+                Text = "Desea abandonar la página y perder los cambios",
                 Icon = SweetAlertIcon.Question,
-                ShowCancelButton = true
+                ShowCancelButton = true,
             });
 
             var confirm = !string.IsNullOrEmpty(result.Value);
@@ -42,9 +42,7 @@ namespace Orders.Frontend.Pages.Countries
             {
                 return;
             }
-
             context.PreventNavigation();
-
         }
     }
 }

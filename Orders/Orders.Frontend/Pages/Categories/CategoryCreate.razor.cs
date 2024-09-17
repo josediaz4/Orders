@@ -3,12 +3,12 @@ using Microsoft.AspNetCore.Components;
 using Orders.Frontend.Repositories;
 using Orders.Shared.Entities;
 
-namespace Orders.Frontend.Pages.Countries
+namespace Orders.Frontend.Pages.Categories
 {
-    public partial class CountryCreate
+    public partial class CategoryCreate
     {
-        private Country country = new();
-        private CountryForm? countryForm;
+        private Category category = new();
+        private CategoryForm? categoryForm;
 
         [Inject] private IRepository Repository { get; set; } = null!;
         [Inject] private SweetAlertService SweetAlertService { get; set; } = null!;
@@ -16,7 +16,7 @@ namespace Orders.Frontend.Pages.Countries
 
         private async Task CreateAsync()
         {
-            var responseHttp = await Repository.PostAsync("/api/countries", country);
+            var responseHttp = await Repository.PostAsync("/api/categories", category);
             if (responseHttp.Error)
             {
                 var message = await responseHttp.GetErrorMessageAsync();
@@ -33,13 +33,14 @@ namespace Orders.Frontend.Pages.Countries
                 ShowConfirmButton = true,
                 Timer = 3000
             });
+
             await toast.FireAsync(icon: SweetAlertIcon.Success, message: "Registro creado con éxito");
         }
 
         private void Return()
         {
-            countryForm!.FormPostedSuccessfully = true;
-            NavigationManager.NavigateTo("/countries");
+            categoryForm!.FormPostedSuccessfully = true;
+            NavigationManager.NavigateTo("/categories");
         }
     }
 }
