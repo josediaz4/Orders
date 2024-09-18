@@ -1,6 +1,7 @@
 ﻿using CurrieTechnologies.Razor.SweetAlert2;
 using Microsoft.AspNetCore.Components;
 using Orders.Frontend.Repositories;
+using Orders.Frontend.Shared;
 using Orders.Shared.Entities;
 using System.Net;
 
@@ -9,7 +10,7 @@ namespace Orders.Frontend.Pages.Categories
     public partial class CategoryEdit
     {
         private Category? category;
-        private CategoryForm? categoryForm;
+        private FormWithName<Category>? categoryForm;
 
         [Inject] private IRepository Repository { get; set; } = null!;
         [Inject] private SweetAlertService SweetAlertService { get; set; } = null!;
@@ -56,7 +57,7 @@ namespace Orders.Frontend.Pages.Categories
                 Timer = 3000
             });
 
-            await toast.FireAsync(icon: SweetAlertIcon.Success, message: "Cambios guardados correctamente");
+            await toast.FireAsync(icon: SweetAlertIcon.Success, message: "Cambios guardados con éxito");
         }
 
         private void Return()
