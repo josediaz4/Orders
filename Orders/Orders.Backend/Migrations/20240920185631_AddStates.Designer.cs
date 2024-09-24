@@ -11,8 +11,8 @@ using Orders.Backend.Data;
 namespace Orders.Backend.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240918210914_AddEntityStateAndCity")]
-    partial class AddEntityStateAndCity
+    [Migration("20240920185631_AddStates")]
+    partial class AddStates
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

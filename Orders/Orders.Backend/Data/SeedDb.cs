@@ -81,8 +81,8 @@ namespace Orders.Backend.Data
                         }
                     ]
                 });
-                _context.Countries.Add(new Country 
-                { 
+                _context.Countries.Add(new Country
+                {
                     Name = "Bolivia",
                     States =
                     [
@@ -111,7 +111,7 @@ namespace Orders.Backend.Data
                     ]
                 });
             }
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
 
         private async Task CheckCategoriesAsync()
@@ -124,7 +124,7 @@ namespace Orders.Backend.Data
                 _context.Categories.Add(new Category { Name = "Hogar" });
                 _context.Categories.Add(new Category { Name = "Electronica" });
             }
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
     }
 }
