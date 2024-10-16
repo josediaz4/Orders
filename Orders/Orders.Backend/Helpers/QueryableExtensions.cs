@@ -7,7 +7,7 @@ namespace Orders.Backend.Helpers
         public static IQueryable<T> Paginate<T>(this IQueryable<T> queryable, PaginationDTO pagination)
         {
             return queryable
-                .Skip((pagination.Pages - 1) * pagination.RecordsNumber)
+                .Skip((pagination.Page - 1) * pagination.RecordsNumber)
                 .Take(pagination.RecordsNumber);
         }
     }

@@ -4,7 +4,6 @@ using Orders.Backend.Helpers;
 using Orders.Backend.Repositories.Interfaces;
 using Orders.Shared.DTOs;
 using Orders.Shared.Repositories;
-using System.Text.RegularExpressions;
 
 namespace Orders.Backend.Repositories.Implementations
 {
@@ -62,7 +61,7 @@ namespace Orders.Backend.Repositories.Implementations
         public virtual async Task<ActionResponse<int>> GetTotalPagesAsync(PaginationDTO pagination)
         {
             var queryable = _entity.AsQueryable();
-            double count = await _entity.CountAsync();
+            double count = await queryable.CountAsync();
             int totalPages = (int)Math.Ceiling(count / pagination.RecordsNumber);
 
             return new ActionResponse<int>
@@ -164,6 +163,6 @@ namespace Orders.Backend.Repositories.Implementations
                 Message = ex.Message
             };
         }
-        
+
     }
 }
