@@ -18,6 +18,13 @@ else
             <Pagination CurrentPage="currentPage"
                         TotalPages="totalPages"
                         SelectedPage="SelectedPageAsync"/>
+            
+            <div class="mb-2" style="display:flex; flex-wrap:wrap; align-items:center;">
+                <input type="text" class="form-control" id="titulo" placeholder="Buscar departamento..." style="width:400px" @bind-value="Filter"/>
+                <button type="button" class="btn btn-primary mx-1" @onclick="ApplyFilterAsync">Filtrar</button>
+                <button type="button" class="btn btn-danger" @onclick="CleanFilterAsync">Limpiar</button>
+            </div>
+
 
             <table class="table table-striped">
                 <thead>
