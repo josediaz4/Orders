@@ -1,14 +1,18 @@
-﻿using Orders.Shared.Entities;
+﻿using Orders.Backend.UnitOfWork.Interfaces;
+using Orders.Shared.Entities;
+using Orders.Shared.Enums;
 
 namespace Orders.Backend.Data
 {
     public class SeedDb
     {
         private readonly DataContext _context;
+        private readonly IUsersUnitOfWoks _usersUnitOfWorks;
 
-        public SeedDb(DataContext context)
+        public SeedDb(DataContext context, IUsersUnitOfWoks usersUnitOfWorks)
         {
             _context = context;
+            _usersUnitOfWorks = usersUnitOfWorks;
         }
 
         public async Task SeedAsync()
@@ -17,6 +21,41 @@ namespace Orders.Backend.Data
 
             await CheckCategoriesAsync();
             await CheckCountriesAsync();
+
+            await CheckRoleAsync();
+            await CheckUserAsync("1010", "Manu", "Díaz", "manu@yopmail.com", "381 5556397", "Calchaquí 159", UserType.Admin);
+        }
+
+        private async Task<User> CheckUserAsync(string document, string firstName, string lastName, string email, string phone, string address, UserType userType)
+        {
+            var user = await _usersUnitOfWorks.GetUserAsync(email);
+            if (user == null)
+            {
+                user = new User
+                {
+                    Document = document,
+                    FirstName = firstName,
+                    LastName = lastName,
+                    Email = email,
+                    PhoneNumber = phone,
+                    Address = address,
+                    UsertType = userType,
+
+                    City = _context.Cities.FirstOrDefault(),
+                    UserName = email
+                };
+
+                await _usersUnitOfWorks.AddUserAsync(user, "123456");
+                await _usersUnitOfWorks.AddUserToRolAsync(user, userType.ToString());
+            }
+
+            return user;
+        }
+
+        private async Task CheckRoleAsync()
+        {
+            await _usersUnitOfWorks.CheckRoleAsync(UserType.Admin.ToString());
+            await _usersUnitOfWorks.CheckRoleAsync(UserType.User.ToString());
         }
 
         private async Task CheckCountriesAsync()
