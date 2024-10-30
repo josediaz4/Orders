@@ -1,49 +1,56 @@
 ﻿@page "/countries"
 
-<h3>Países</h3>
+<div class="card">
+    <div class="card-header">
+        <span>
+            <i class="bi bi-globe-americas">Países</i>
+            <a class="btn btn-sm btn-primary float-end" href="/countries/create"><i class="bi bi-plus-square" />Nuevo País</a>
+        </span>
+    </div>
 
-<div class="mb-3">
-    <a class="btn btn-primary" href="/countries/create">Nuevo País</a>
+    <div class="card-body">
+        <GenericList MyList="Countries" >
+            <Body>
+                <div class="mb-2" style="display:flex; flex-wrap:wrap; align-items:center">
+                    <div>
+                        <input type="text" class="form-control" id="titulo" placeholder="Buscar país..." style="width:400px;"  @bind-value="Filter" />
+                    </div>
+                    <div class="mx-1">
+                        <button type="button" class="btn btn-outline-primary" @onclick="AppliFilterAsync"><i class="bi bi-funnel" />Filtrar</button>
+                        <button type="button" class="btn btn-outline-danger" @onclick="CleanFilterAsync"><i class="bi bi-x-circle" />Limpiar</button>
+                    </div>                    
+                </div>
+                <Pagination CurrentPage="currentPage"
+                            TotalPages="totalPages"
+                            SelectedPage="SelectedPageAsync" />
+
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>País</th>
+                            <th style="width:210px">Departamentos</th>
+                            <th style="width:168px"></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var country in Countries!)
+                        {
+                            <tr>
+                                <td><a href="/countries/details/@country.Id">@country.Name</a></td>
+                                <td>@country.StatesNumber</td>
+                                <td>
+                                    <a href="/countries/edit/@country.Id" class="btn btn-sm btn-warning"><i class="bi bi-pencil" />Editar</a>
+                                    <button @onclick=@(() => DeleteAsync(country)) class="btn btn-sm btn-danger"><i class="bi bi-trash" />Borrar</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </Body>
+        </GenericList>
+    </div>
 </div>
-
-<GenericList MyList="Countries"> 
-    <Body>
-        <Pagination CurrentPage="currentPage"
-                    TotalPages="totalPages"
-                    SelectedPage="SelectedPageAsync"/>
-
-        <div class="mb-2" style="display:flex; flex-wrap:wrap; align-items:center;">
-            <input type="text" class="form-control" id="titulo" placeholder="Buscar país..." style="width:400px;" @bind-value="Filter"/>
-            <button type="button" class="btn btn-primary mx-1" @onclick="AppliFilterAsync">Filtrar</button>
-            <button type="button" class="btn btn-danger" @onclick="CleanFilterAsync">Limpiar</button>
-        </div>
-
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>País</th>
-                    <th style="width:210px">Departamentos</th>
-                    <th style="width:210px"></th>
-                </tr>
-            </thead>
-
-            <tbody>
-                @foreach (var country in Countries!)
-                {
-                    <tr>
-                        <td>@country.Name</td>
-                        <td>@country.StatesNumber</td>
-                        <td>
-                            <a href="/countries/edit/@country.Id" class="btn btn-sm btn-warning">Editar</a>
-                            <a href="/countries/details/@country.Id" class="btn btn-sm btn-info">Detalles</a>
-                            <button @onclick=@(() => DeleteAsync(country)) class="btn btn-sm btn-danger">Borrar</button>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </Body>
-</GenericList>
 
 
 
